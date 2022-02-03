@@ -46,11 +46,11 @@ cause the issue above.
    <+>UTF-8
    ===================================================================
    diff --git a/src/main/kotlin/dev/monosoul/kotlin/samissue/SomeValueClass.kt b/src/main/kotlin/dev/monosoul/kotlin/samissue/SomeValueClass.kt
-   --- a/src/main/kotlin/dev/monosoul/kotlin/samissue/SomeValueClass.kt	(revision 47da0fdeb1a92f00eb7f4c3f6dcf1112b55506c2)
-   +++ b/src/main/kotlin/dev/monosoul/kotlin/samissue/SomeValueClass.kt	(date 1643894749907)
+   --- a/src/main/kotlin/dev/monosoul/kotlin/samissue/SomeValueClass.kt	(revision 8e287ef8293eaa058e791cebad516c6c7cabb29e)
+   +++ b/src/main/kotlin/dev/monosoul/kotlin/samissue/SomeValueClass.kt	(date 1643895135455)
    @@ -1,4 +1,3 @@
-    package dev.monosoul.kotlin.samissue
-    
+   package dev.monosoul.kotlin.samissue
+   
    -@JvmInline
    -value class SomeValueClass(val value: Map<String, String>)
    +data class SomeValueClass(val value: Map<String, String>)
@@ -86,10 +86,10 @@ before.
    <+>UTF-8
    ===================================================================
    diff --git a/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt b/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt
-   --- a/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt	(revision 47da0fdeb1a92f00eb7f4c3f6dcf1112b55506c2)
-   +++ b/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt	(date 1643893764997)
+   --- a/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt	(revision 8e287ef8293eaa058e791cebad516c6c7cabb29e)
+   +++ b/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt	(date 1643897988381)
    @@ -3,7 +3,7 @@
-    val implementationsDefinedInADifferentFile = listOf<IFunctionalInterfaceConsumer>(
+    val implementationsDefinedInADifferentFile = listOf(
         FunctionalInterfaceConsumer(
             string = "asd",
    -        implementation = { value ->
@@ -108,10 +108,10 @@ before.
    <+>UTF-8
    ===================================================================
    diff --git a/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt b/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt
-   --- a/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt	(revision d5de418457ef6450613343ce86a1b2136789d15d)
-   +++ b/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt	(date 1643895444574)
+   --- a/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt	(revision c3b40a447c9c1b7a1ac064566a52caec3b2d5925)
+   +++ b/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt	(date 1643898124252)
    @@ -3,7 +3,7 @@
-    val implementationsDefinedInADifferentFile = listOf<IFunctionalInterfaceConsumer>(
+    val implementationsDefinedInADifferentFile = listOf(
         FunctionalInterfaceConsumer(
             string = "asd",
    -        implementation = SomeFunctionalInterface { value ->
