@@ -14,8 +14,8 @@ Receiver class dev.monosoul.kotlin.samissue.ImplementationsKt$implementationsDef
 Values `1_ImplementationsKt.getImplementationsInFileBefore` and  
 `3_ImplementationsKt.getImplementationsInFileAfter` are declared exactly the same way.
 
-From my observation it looks like the file order plays a role here, since lambdas declared in `1_Implementations.kt`
-fail with the exception and lambdas declared in `3_Implementations.kt` work fine.
+From my observation it looks like the file order plays a role here, since lambdas declared in `3_Implementations.kt`
+fail with the exception and lambdas declared in `1_Implementations.kt` work fine.
 
 #### Steps to reproduce:
  - run `./gradlew clean`
