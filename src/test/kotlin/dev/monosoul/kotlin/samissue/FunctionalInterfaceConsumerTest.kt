@@ -5,16 +5,23 @@ import org.junit.jupiter.api.Test
 class FunctionalInterfaceConsumerTest {
 
     @Test
-    fun `should not fail calling the consumer when it is defined in the other file`() {
-        implementationsDefinedInADifferentFile.forEach {
-            it.callFunctionalInterfaceImplementation()
+    fun `should not fail calling a lambda when it is defined in the file before interface definition`() {
+        implementationsInFileBefore.forEach {
+            it.returnOtherString("asd")
         }
     }
 
     @Test
-    fun `should not fail calling the consumer when it is defined in the same file`() {
+    fun `should not fail calling a lambda when it is defined in the same file`() {
         implementationsDefinedInTheSameFile.forEach {
-            it.callFunctionalInterfaceImplementation()
+            it.returnOtherString("asd")
+        }
+    }
+
+    @Test
+    fun `should not fail calling a lambda when it is defined in the file after interface definition`() {
+        implementationsInFileAfter.forEach {
+            it.returnOtherString("asd")
         }
     }
 }
