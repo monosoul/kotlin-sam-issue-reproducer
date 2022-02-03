@@ -9,7 +9,7 @@ Receiver class dev.monosoul.kotlin.samissue.ImplementationsKt$implementationsDef
 
 ## There are at least 3 issues here:
 
-### #1 The same object declared in different places have different behavior
+### #1 Two objects declared the same way in different places have different behavior
 
 Values `1_ImplementationsKt.getImplementationsInFileBefore` and  
 `3_ImplementationsKt.getImplementationsInFileAfter` are declared exactly the same way.
