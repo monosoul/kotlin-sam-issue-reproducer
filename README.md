@@ -11,24 +11,23 @@ Receiver class dev.monosoul.kotlin.samissue.ImplementationsKt$implementationsDef
 
 ### #1 The same object declared in different places have different behavior
 
-Value `ImplementationsKt.implementationsDefinedInADifferentFile` and value 
-`FunctionalInterfaceConsumerKt.implementationsDefinedInTheSameFile` are declared exactly the same way. 
+Values `1_ImplementationsKt.getImplementationsInFileBefore` and  
+`3_ImplementationsKt.getImplementationsInFileAfter` are declared exactly the same way.
 
-Yet in the test they behave differently - items of `implementationsDefinedInTheSameFile` does not throw an exception 
-when calling `SomeFunctionalInterface#returnOtherString`, while `implementationsDefinedInADifferentFile` do  throw
-an exception.
+From my observation it looks like the file order plays a role here, since lambdas declared in `1_Implementations.kt`
+fail with the exception and lambdas declared in `3_Implementations.kt` work fine.
 
 #### Steps to reproduce:
  - run `./gradlew clean`
  - run `./gradlew test`
 
 #### Expected behavior:
-Calls to elements of `ImplementationsKt.implementationsDefinedInADifferentFile` and 
-`FunctionalInterfaceConsumerKt.implementationsDefinedInTheSameFile` behave the same.
+Calls to elements of `3_ImplementationsKt.getImplementationsInFileAfter` and 
+`1_ImplementationsKt.getImplementationsInFileBefore` behave the same.
 
 #### Actual behavior:
-Calls to elements of `ImplementationsKt.implementationsDefinedInADifferentFile` and
-`FunctionalInterfaceConsumerKt.implementationsDefinedInTheSameFile` behave differently.
+Calls to elements of `3_ImplementationsKt.getImplementationsInFileAfter` and
+`1_ImplementationsKt.getImplementationsInFileBefore` behave differently.
 
 ---
 
@@ -46,11 +45,11 @@ cause the issue above.
    <+>UTF-8
    ===================================================================
    diff --git a/src/main/kotlin/dev/monosoul/kotlin/samissue/SomeValueClass.kt b/src/main/kotlin/dev/monosoul/kotlin/samissue/SomeValueClass.kt
-   --- a/src/main/kotlin/dev/monosoul/kotlin/samissue/SomeValueClass.kt	(revision 8e287ef8293eaa058e791cebad516c6c7cabb29e)
-   +++ b/src/main/kotlin/dev/monosoul/kotlin/samissue/SomeValueClass.kt	(date 1643895135455)
+   --- a/src/main/kotlin/dev/monosoul/kotlin/samissue/SomeValueClass.kt	(revision 76f38dfd574959ee92e937ec4b81deaf61b240eb)
+   +++ b/src/main/kotlin/dev/monosoul/kotlin/samissue/SomeValueClass.kt	(date 1643904653388)
    @@ -1,4 +1,3 @@
-   package dev.monosoul.kotlin.samissue
-   
+    package dev.monosoul.kotlin.samissue
+    
    -@JvmInline
    -value class SomeValueClass(val value: Map<String, String>)
    +data class SomeValueClass(val value: Map<String, String>)
@@ -80,20 +79,20 @@ before.
 - run `./gradlew test` (the test fails)
 - add explicit SAM-constructor declaration:
    ```diff
-   Index: src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt
+   Index: src/main/kotlin/dev/monosoul/kotlin/samissue/3_Implementations.kt
    IDEA additional info:
    Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
    <+>UTF-8
    ===================================================================
-   diff --git a/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt b/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt
-   --- a/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt	(revision 8e287ef8293eaa058e791cebad516c6c7cabb29e)
-   +++ b/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt	(date 1643897988381)
-   @@ -3,7 +3,7 @@
-    val implementationsDefinedInADifferentFile = listOf(
-        FunctionalInterfaceConsumer(
-            string = "asd",
-   -        implementation = { value ->
-   +        implementation = SomeFunctionalInterface { value ->
+   diff --git a/src/main/kotlin/dev/monosoul/kotlin/samissue/3_Implementations.kt b/src/main/kotlin/dev/monosoul/kotlin/samissue/3_Implementations.kt
+   --- a/src/main/kotlin/dev/monosoul/kotlin/samissue/3_Implementations.kt	(revision 76f38dfd574959ee92e937ec4b81deaf61b240eb)
+   +++ b/src/main/kotlin/dev/monosoul/kotlin/samissue/3_Implementations.kt	(date 1643904709898)
+   @@ -2,7 +2,7 @@
+    
+    val implementationsInFileAfter = mutableListOf<SomeFunctionalInterface>().also {
+        it.add(
+   -        { value ->
+   +        SomeFunctionalInterface { value ->
                 SomeValueClass(mapOf(
                     value to value
                 ))
@@ -102,20 +101,20 @@ before.
 - run `./gradlew test` (the test passes)
 - remove explicit SAM-constructor declaration:
    ```diff
-   Index: src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt
+   Index: src/main/kotlin/dev/monosoul/kotlin/samissue/3_Implementations.kt
    IDEA additional info:
    Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
    <+>UTF-8
    ===================================================================
-   diff --git a/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt b/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt
-   --- a/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt	(revision c3b40a447c9c1b7a1ac064566a52caec3b2d5925)
-   +++ b/src/main/kotlin/dev/monosoul/kotlin/samissue/Implementations.kt	(date 1643898124252)
-   @@ -3,7 +3,7 @@
-    val implementationsDefinedInADifferentFile = listOf(
-        FunctionalInterfaceConsumer(
-            string = "asd",
-   -        implementation = SomeFunctionalInterface { value ->
-   +        implementation = { value ->
+   diff --git a/src/main/kotlin/dev/monosoul/kotlin/samissue/3_Implementations.kt b/src/main/kotlin/dev/monosoul/kotlin/samissue/3_Implementations.kt
+   --- a/src/main/kotlin/dev/monosoul/kotlin/samissue/3_Implementations.kt	(revision e04dd09487da52adab212fc3ca899345e5f9eab4)
+   +++ b/src/main/kotlin/dev/monosoul/kotlin/samissue/3_Implementations.kt	(date 1643904743798)
+   @@ -2,7 +2,7 @@
+    
+    val implementationsInFileAfter = mutableListOf<SomeFunctionalInterface>().also {
+        it.add(
+   -        SomeFunctionalInterface { value ->
+   +        { value ->
                 SomeValueClass(mapOf(
                     value to value
                 ))
