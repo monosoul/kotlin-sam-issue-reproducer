@@ -14,3 +14,14 @@ data class FunctionalInterfaceConsumer(
 fun interface SomeFunctionalInterface {
     fun returnOtherString(input: String): SomeValueClass
 }
+
+val implementationsDefinedInTheSameFile = listOf<IFunctionalInterfaceConsumer>(
+    FunctionalInterfaceConsumer(
+        string = "asd",
+        implementation = { value ->
+            SomeValueClass(mapOf(
+                value to value
+            ))
+        }
+    )
+)

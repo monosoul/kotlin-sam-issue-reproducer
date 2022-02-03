@@ -1,6 +1,6 @@
 package dev.monosoul.kotlin.samissue
 
-val implementations = listOf<IFunctionalInterfaceConsumer>(
+val implementationsDefinedInADifferentFile = listOf<IFunctionalInterfaceConsumer>(
     FunctionalInterfaceConsumer(
         string = "asd",
         implementation = { value ->
