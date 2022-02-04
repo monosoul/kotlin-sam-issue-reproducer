@@ -2,7 +2,7 @@ package dev.monosoul.kotlin.samissue
 
 import org.junit.jupiter.api.Test
 
-class FunctionalInterfaceConsumerTest {
+class SomeFunctionalInterfaceTest {
 
     @Test
     fun `should not fail calling a lambda when it is defined in the file before interface definition`() {
