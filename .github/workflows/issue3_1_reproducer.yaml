@@ -1,4 +1,4 @@
-name: Issue 3 reproducer
+name: Issue 3.1 reproducer
 
 on: [push]
 
