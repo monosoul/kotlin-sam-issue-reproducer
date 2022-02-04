@@ -22,6 +22,7 @@ jobs:
         uses: mikepenz/action-junit-report@v2
         if: always()
         with:
+          check_name: Test report before the first change
           report_paths: '**/build/test-results/**/TEST-*.xml'
 
       - name: Add explicit SAM constructor declaration
@@ -37,6 +38,7 @@ jobs:
         uses: mikepenz/action-junit-report@v2
         if: always()
         with:
+          check_name: Test report after the first change
           report_paths: '**/build/test-results/**/TEST-*.xml'
 
       - name: Remove explicit SAM constructor declaration
@@ -52,4 +54,5 @@ jobs:
         uses: mikepenz/action-junit-report@v2
         if: always()
         with:
+          check_name: Test report after the second change
           report_paths: '**/build/test-results/**/TEST-*.xml'
