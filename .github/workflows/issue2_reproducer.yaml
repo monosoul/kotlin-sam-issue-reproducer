@@ -23,7 +23,7 @@ jobs:
         run: |
           sed -i -e "s|@JvmInline||g" src/main/kotlin/dev/monosoul/kotlin/samissue/SomeValueClass.kt
 
-      - name: Change value class to data class annotation
+      - name: Change value class to data class
         if: always()
         run: |
           sed -i -e "s|value class|data class|g" src/main/kotlin/dev/monosoul/kotlin/samissue/SomeValueClass.kt
